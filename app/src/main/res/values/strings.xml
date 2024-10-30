@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">I am a historian</string>
+    <string name="start">Начать</string>
+    <string name="heading">Я историк</string>
+    <string name="exit">Выход</string>
+    <string name="test_title">Тест - я историк</string>
+    <string name="first_answer_default">Первый ответ</string>
+    <string name="second_answer_default">Второй ответ</string>
+    <string name="third_answer_default">Третий ответ</string>
+    <string name="question_default">Вопрос</string>
+    <string name="Number_of_points">Количество баллов:</string>
+    <string name="characteristic_default">Характеристика</string>
+</resources>
