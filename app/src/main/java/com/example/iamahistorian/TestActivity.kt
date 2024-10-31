@@ -21,10 +21,9 @@ class TestActivity : AppCompatActivity() {
     private var countQuestion = 0
     private var countPoints = 0
 
-    val intent = Intent(this, ResultActivity::class.java)
+    val myintent = Intent(this, ResultActivity::class.java)
 
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -88,8 +87,8 @@ class TestActivity : AppCompatActivity() {
                     answer_1.setOnClickListener {checkingForCorrectness(false)}
                 }
                 6 -> {
-                    startActivity(intent)
-                    intent.putExtra("count", countPoints)
+                    myintent.putExtra("count", countPoints)
+                    startActivity(myintent)
                 }
             }
         }
