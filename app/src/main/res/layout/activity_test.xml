@@ -34,6 +34,7 @@
             android:padding="10dp"/>
 
         <RadioButton
+            android:id="@+id/answer_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/first_answer_default"
@@ -41,12 +42,14 @@
             />
 
         <RadioButton
+            android:id="@+id/answer_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/second_answer_default"
             android:textSize="24sp"
             />
         <RadioButton
+            android:id="@+id/answer_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/third_answer_default"

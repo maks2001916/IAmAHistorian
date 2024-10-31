@@ -1,6 +1,7 @@
 package com.example.iamahistorian
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ScrollView
@@ -27,9 +28,16 @@ class ResultActivity : AppCompatActivity() {
         characteristicSV = findViewById(R.id.characteristicSV)
         characteristicTV = findViewById(R.id.characteristicTV)
         exitBTN = findViewById(R.id.exitBTN)
-        exitBTN.setOnClickListener {
-            finish()
+
+        numberOfPointsTV.setText("${R.string.Number_of_points} ${intent.getIntExtra("count", 0)}")
+        when (intent.getIntExtra("count", 0)) {
+            100 -> characteristicTV.setText("${R.string.characteristic_default} ${R.string.bad}")
+            200 -> characteristicTV.setText("${R.string.characteristic_default} ${R.string.not_satisfactory}")
+            300 -> characteristicTV.setText("${R.string.characteristic_default} ${R.string.satisfactory}")
+            400 -> characteristicTV.setText("${R.string.characteristic_default} ${R.string.good}")
+            500 -> characteristicTV.setText("${R.string.characteristic_default} ${R.string.excellent}")
         }
+        exitBTN.setOnClickListener { finish() }
 
     }
 }
