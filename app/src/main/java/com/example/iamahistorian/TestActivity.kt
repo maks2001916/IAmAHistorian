@@ -18,11 +18,8 @@ class TestActivity : AppCompatActivity() {
     private lateinit var answer_2: RadioButton
     private lateinit var answer_3: RadioButton
     private lateinit var questionTV: TextView
-    private var countQuestion = 0
+    private var countQuestion = 1
     private var countPoints = 0
-
-    val myintent = Intent(this, ResultActivity::class.java)
-
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,87 +27,88 @@ class TestActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_test)
 
+
+
         toolbarTB = findViewById(R.id.activity_testTB)
         answer_1 = findViewById(R.id.answer_1)
         answer_2 = findViewById(R.id.answer_2)
         answer_3 = findViewById(R.id.answer_3)
         questionTV = findViewById(R.id.questionTV)
 
-        questionTV.setText(R.string.question_1)
-        answer_1.setText(R.string.answer_1_1)
-        answer_1.setOnClickListener {checkingForCorrectness(true)}
-        answer_2.setText(R.string.answer_1_2)
-        answer_1.setOnClickListener {checkingForCorrectness(false)}
-        answer_3.setText(R.string.answer_1_3)
-        answer_1.setOnClickListener {checkingForCorrectness(false)}
+        setSupportActionBar(toolbarTB)
 
-
+        startQuiz()
 
     }
 
-    fun nextQuestion() {
-        if (countQuestion < 6) {
-            when (countQuestion) {
-                2 -> {
-                    questionTV.setText(R.string.question_2)
-                    answer_1.setText(R.string.answer_2_1)
-                    answer_1.setOnClickListener {checkingForCorrectness(false)}
-                    answer_2.setText(R.string.answer_2_2)
-                    answer_2.setOnClickListener {checkingForCorrectness(false)}
-                    answer_3.setText(R.string.answer_3_3)
-                    answer_3.setOnClickListener {checkingForCorrectness(true)}
-                }
-                3 -> {
-                    questionTV.setText(R.string.question_3)
-                    answer_1.setText(R.string.answer_3_1)
-                    answer_1.setOnClickListener {checkingForCorrectness(false)}
-                    answer_2.setText(R.string.answer_3_2)
-                    answer_1.setOnClickListener {checkingForCorrectness(true)}
-                    answer_3.setText(R.string.answer_3_3)
-                    answer_1.setOnClickListener {checkingForCorrectness(false)}
-                }
-                4 -> {
-                    questionTV.setText(R.string.question_4)
-                    answer_1.setText(R.string.answer_4_1)
-                    answer_1.setOnClickListener {checkingForCorrectness(true)}
-                    answer_2.setText(R.string.answer_4_2)
-                    answer_1.setOnClickListener {checkingForCorrectness(false)}
-                    answer_3.setText(R.string.answer_4_3)
-                    answer_1.setOnClickListener {checkingForCorrectness(false)}
-                }
-                5 -> {
-                    questionTV.setText(R.string.question_5)
-                    answer_1.setText(R.string.answer_5_1)
-                    answer_1.setOnClickListener {checkingForCorrectness(false)}
-                    answer_2.setText(R.string.answer_5_2)
-                    answer_1.setOnClickListener {checkingForCorrectness(true)}
-                    answer_3.setText(R.string.answer_5_3)
-                    answer_1.setOnClickListener {checkingForCorrectness(false)}
-                }
-                6 -> {
-                    answer_1.setOnClickListener {
-                        myintent.putExtra("count", countPoints)
-                        startActivity(intent) }
-                    answer_2.setOnClickListener {
-                        myintent.putExtra("count", countPoints)
-                        startActivity(intent) }
-                    answer_3.setOnClickListener {
-                        myintent.putExtra("count", countPoints)
-                        startActivity(intent) }
-                }
+    fun startQuiz() {
+        updateQuestion()
+    }
+
+    fun updateQuestion() {
+        when (countQuestion) {
+            1 -> {
+                questionTV.setText(R.string.question_1)
+                answer_1.setText(R.string.answer_1_1)
+                answer_2.setText(R.string.answer_1_2)
+                answer_3.setText(R.string.answer_1_3)
+                setAnswerListeners(correctAnswer = 1)
+            }
+            2 -> {
+                questionTV.setText(R.string.question_2)
+                answer_1.setText(R.string.answer_2_1)
+                answer_2.setText(R.string.answer_2_2)
+                answer_3.setText(R.string.answer_2_3)
+                setAnswerListeners(correctAnswer = 3)
+            }
+            3 -> {
+                questionTV.setText(R.string.question_3)
+                answer_1.setText(R.string.answer_3_1)
+                answer_2.setText(R.string.answer_3_2)
+                answer_3.setText(R.string.answer_3_3)
+                setAnswerListeners(correctAnswer = 2)
+            }
+            4 -> {
+                questionTV.setText(R.string.question_4)
+                answer_1.setText(R.string.answer_4_1)
+                answer_2.setText(R.string.answer_4_2)
+                answer_3.setText(R.string.answer_4_3)
+                setAnswerListeners(correctAnswer = 1)
+            }
+            5 -> {
+                questionTV.setText(R.string.question_5)
+                answer_1.setText(R.string.answer_5_1)
+                answer_2.setText(R.string.answer_5_2)
+                answer_3.setText(R.string.answer_5_3)
+                setAnswerListeners(correctAnswer = 2)
+            }
+            6 -> {
+                // Переход к результатам
+                answer_1.setOnClickListener { finishQuiz() }
+                answer_2.setOnClickListener { finishQuiz() }
+                answer_3.setOnClickListener { finishQuiz() }
             }
         }
     }
 
-    fun checkingForCorrectness(answer: Boolean) {
-        if (answer) {
-            countPoints+=100
-            countQuestion++
-            nextQuestion()
-        } else {
-            countQuestion++
-            nextQuestion()
+    fun setAnswerListeners(correctAnswer: Int) {
+        answer_1.setOnClickListener { checkingForCorrectness(correctAnswer == 1) }
+        answer_2.setOnClickListener { checkingForCorrectness(correctAnswer == 2) }
+        answer_3.setOnClickListener { checkingForCorrectness(correctAnswer == 3) }
+    }
+
+    fun checkingForCorrectness(isCorrect: Boolean) {
+        if (isCorrect) {
+            countPoints += 100
         }
+        countQuestion++
+        updateQuestion()
+    }
+
+    fun finishQuiz() {
+        var resultIntent = Intent(this, ResultActivity::class.java)
+        resultIntent.putExtra("count", countPoints)
+        startActivity(resultIntent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -120,7 +118,7 @@ class TestActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.exitBTN -> finish()
+            R.id.exitBTN -> finishAffinity()
         }
         return super.onOptionsItemSelected(item)
     }

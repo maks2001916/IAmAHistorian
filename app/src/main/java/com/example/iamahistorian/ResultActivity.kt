@@ -29,15 +29,17 @@ class ResultActivity : AppCompatActivity() {
         characteristicTV = findViewById(R.id.characteristicTV)
         exitBTN = findViewById(R.id.exitBTN)
 
-        numberOfPointsTV.setText("${R.string.Number_of_points} ${intent.getIntExtra("count", 0)}")
-        when (intent.getIntExtra("count", 0)) {
-            100 -> characteristicTV.setText("${R.string.characteristic_default} ${R.string.bad}")
-            200 -> characteristicTV.setText("${R.string.characteristic_default} ${R.string.not_satisfactory}")
-            300 -> characteristicTV.setText("${R.string.characteristic_default} ${R.string.satisfactory}")
-            400 -> characteristicTV.setText("${R.string.characteristic_default} ${R.string.good}")
-            500 -> characteristicTV.setText("${R.string.characteristic_default} ${R.string.excellent}")
+        val count = intent.getIntExtra("count", 0)
+
+        numberOfPointsTV.setText("${getString(R.string.Number_of_points)} $count")
+        when (count) {
+            100 -> characteristicTV.setText("${getString(R.string.characteristic_default)} ${getString(R.string.bad)}")
+            200 -> characteristicTV.setText("${getString(R.string.characteristic_default)} ${getString(R.string.not_satisfactory)}")
+            300 -> characteristicTV.setText("${getString(R.string.characteristic_default)} ${getString(R.string.satisfactory)}")
+            400 -> characteristicTV.setText("${getString(R.string.characteristic_default)} ${getString(R.string.good)}")
+            500 -> characteristicTV.setText("${getString(R.string.characteristic_default)} ${getString(R.string.excellent)}")
         }
-        exitBTN.setOnClickListener { finish() }
+        exitBTN.setOnClickListener { finishAffinity() }
 
     }
 }
